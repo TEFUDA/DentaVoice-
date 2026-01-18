@@ -8,9 +8,11 @@ import { createClient } from '@/lib/supabase/client'
 import { Button, Input } from '@/components/ui'
 import { CONFIG } from '@/lib/config'
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
+
 export default function LoginPage() {
   const router = useRouter()
-  const supabase = createClient()
   
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -24,6 +26,7 @@ export default function LoginPage() {
     setError('')
 
     try {
+      const supabase = createClient()
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -48,6 +51,7 @@ export default function LoginPage() {
   }
 
   const handleGoogleLogin = async () => {
+    const supabase = createClient()
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
